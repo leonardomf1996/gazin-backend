@@ -1,0 +1,13 @@
+{
+   "type": "",
+   "database": "",
+   "migrations": [
+      ""
+   ],
+   "entities": [
+      ""
+   ],
+   "cli": {
+      "migrationsDir": ""
+   }
+}
