@@ -101,7 +101,10 @@ class DeveloperController {
          datanascimento
       }
 
-      developersRepository.update(developer, findDev);
+      developersRepository.save({
+         ...findDev,
+         ...developer
+      });
 
       return response.status(200).json(developer);
    }
@@ -117,7 +120,10 @@ class DeveloperController {
          throw new AppError('Developer not found!', 400)
       }
 
-      return response.status(204);
+      developersRepository.delete(findDev.id);
+
+
+      return response.status(204).send();
    }
 }
 
