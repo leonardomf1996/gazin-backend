@@ -37,14 +37,31 @@ describe("Developers", async () => {
 
    it('should be able to get a dev from the id', async () => {
 
-      const response = await request(app).get(`/developers/17ca0e85-897d-46ab-95db-b274da350e5d`);
+      const response = await request(app).post('/developers')
+         .send({
+            nome: "Fulana",
+            sexo: "F",
+            idade: 34,
+            hobby: "Dormir",
+            datanascimento: 19870102
+         });
 
-      expect(response.status).toBe(200);
+      expect(response.text).toContain("id");
    });
 
    it('should be able to update a dev from the id', async () => {
 
-      const response = await request(app).put(`/developers/17ca0e85-897d-46ab-95db-b274da350e5d`)
+      const response = await request(app).post('/developers')
+         .send({
+            nome: "Fulana",
+            sexo: "F",
+            idade: 34,
+            hobby: "Dormir",
+            datanascimento: 19870102
+         });
+
+      const id = response.text.toString().substring(7, 43);
+      const anotherResponse = await request(app).put(`/developers/${id}`)
          .send({
             nome: "Fulana de Tal",
             sexo: "F",
@@ -53,14 +70,26 @@ describe("Developers", async () => {
             datanascimento: 19870102
          });
 
-      expect(response.status).toBe(200);
+      expect(response.text).toContain("id");
+      expect(anotherResponse.status).toBe(200);
    })
 
    it('should be able to delete a dev from the id', async () => {
 
-      const response = await request(app).delete(`/developers/17ca0e85-897d-46ab-95db-b274da350e5d`);
+      const response = await request(app).post('/developers')
+         .send({
+            nome: "Fulana",
+            sexo: "F",
+            idade: 34,
+            hobby: "Dormir",
+            datanascimento: 19870102
+         });
 
-      expect(response.status).toBe(204);
+      const id = response.text.toString().substring(7, 43);
+
+      const anotherResponse = await request(app).delete(`/developers/${id}`);
+
+      expect(anotherResponse.status).toBe(204);
    })
 
 });
