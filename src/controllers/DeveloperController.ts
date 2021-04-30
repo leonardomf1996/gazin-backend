@@ -77,28 +77,12 @@ class DeveloperController {
          throw new AppError('Developer not found!', 400)
       }
 
-      const schema = yup.object().shape({
-         nome: yup.string().required('Nome obrigatório'),
-         sexo: yup.string().required('Sexo obrigatório'),
-         idade: yup.number().required('Idade obrigatória'),
-         hobby: yup.string().required('Hobby obrigatório'),
-         datanascimento: yup.date().required('Data obrigatória')
-      });
-
-      try {
-         await schema.validate(request.body, {
-            abortEarly: false
-         });
-      } catch (error) {
-         throw new AppError(error);
-      }
-
       const developer = {
-         nome,
-         sexo,
-         idade,
-         hobby,
-         datanascimento
+         nome: nome ? nome : findDev.nome,
+         sexo: sexo ? sexo : findDev.sexo,
+         idade: idade ? idade : findDev.idade,
+         hobby: hobby ? hobby : findDev.hobby,
+         datanascimento: datanascimento ? datanascimento : findDev.datanascimento
       }
 
       developersRepository.save({
